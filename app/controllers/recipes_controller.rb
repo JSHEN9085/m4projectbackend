@@ -7,7 +7,15 @@ class RecipesController < ApplicationController
    end
 
   def create
-     @recipe=Recipe.new(name:params[:name],user_id:params[:user_id])
+     @recipe=Recipe.new(
+       user_id: params[:user_id],
+       name: params[:name],
+       image: params[:image],
+       calories: params[:calories],
+       cooking_time: params[:cooking_time],
+       ingredients: params[:ingredients]
+     )
+
      if @recipe.save
        render json: @recipe, status: :accepted
      else
