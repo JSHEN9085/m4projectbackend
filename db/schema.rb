@@ -22,27 +22,13 @@ ActiveRecord::Schema.define(version: 2018_10_18_201848) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "ingredients", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "recipeingredients", force: :cascade do |t|
-    t.integer "ingredient_id"
-    t.integer "recipe_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "recipes", force: :cascade do |t|
     t.string "name"
-    t.string "cuisine"
     t.string "image"
-    t.string "servings"
     t.integer "calories"
-    t.integer "user_id"
-    t.string "dietlabel"
+    t.integer "user_id", default: 1
+    t.integer "cooking_time"
+    t.text "ingredients", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
