@@ -15,12 +15,30 @@ class RecipesController < ApplicationController
        cooking_time: params[:cooking_time],
        ingredients: params[:ingredients]
      )
-
      if @recipe.save
        render json: @recipe, status: :accepted
      else
        render json: { errors: @recipe.errors.full_messages }, status: :unprocessible_entity
      end
+  end
+
+  def show
+    @user = User.find(params[:user_id])
+    @recipes = @user.recipes
+    @recipe = @recipes.find(params[:id])
+    render json: @recipe
+  end
+
+  def destroy
+    @recipe = Recipe.find(params[:id].to_i)
+    if @recipe.user_id == params[:user_id].to_i
+      @recipe.destroy
+      render json: @recipe
+    else
+      @collection = @recipe.collections.where({recipe_id: @recipe.id, collector_id: params[:user_id].to_i })
+      @collection.destroy
+      render json: @collection
+    end
   end
 
   # def update

@@ -5,6 +5,7 @@ class CollectionsController < ApplicationController
     render json: @recipes, status: :accepted
   end
 
+
   def create
      @collection=Collection.new(
        collector_id: params[:user_id],
@@ -18,4 +19,18 @@ class CollectionsController < ApplicationController
        render json: { errors: @collection.errors.full_messages }, status: :unprocessible_entity
      end
    end
+
+   def show
+     @user = User.find(params[:user_id])
+     @collections = @user.collected_recipes
+     @collection = @collections.find(params[:id])
+   end
+
+   def destroy
+     @collection = Collection.find(params[:id])
+     @collection.destroy
+     render json: @collection
+   end
+
+
 end
