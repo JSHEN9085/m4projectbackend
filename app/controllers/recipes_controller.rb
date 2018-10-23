@@ -35,7 +35,8 @@ class RecipesController < ApplicationController
       @recipe.destroy
       render json: @recipe
     else
-      @collection = @recipe.collections.where({recipe_id: @recipe.id, collector_id: params[:user_id].to_i })
+      
+      @collection = @recipe.collections.where({collector_id: params[:user_id].to_i })
       @collection.destroy
       render json: @collection
     end
